@@ -8,19 +8,11 @@ if __name__ == "__main__":
     optparser.add_argument('-v', action='store_true', help='get volume')
     optparser.add_argument('-s', action='store_true', help='get surface')
     optparser.add_argument('-d', action='store_true', help='get diameter')
-    optparser.add_argument('--load', help='load from file')
-    optparser.add_argument('--save', help='save to file')
     opts = optparser.parse_args()
-    if opts.radius == None and opts.load == None:
+    if opts.radius == None:
         optparser.error("you must supply a radius")
-    if opts.radius and opts.load:
-        optparser.error("you must not supply a radius when loading from file")
 
-    if opts.load:
-        print "loading Sphere from from file %s" % opts.load
-        my_sphere = sphere.loadSphere(opts.load)
-    else:
-        my_sphere = sphere.Sphere(opts.radius)
+    my_sphere = sphere.Sphere(opts.radius)
     print "%s" % my_sphere
     print "  radius is %s" % my_sphere.radius
     if opts.v:
@@ -29,6 +21,3 @@ if __name__ == "__main__":
         print "  surface is %s" % my_sphere.surface()
     if opts.d:
         print "  diameter is %s" % my_sphere.diameter()
-    if opts.save:
-        print "dumping Sphere to file %s" % opts.save
-        my_sphere.dump(opts.save)
